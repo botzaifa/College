@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Traffic Signal</title>
+	<style>
+        .traffic-signal {
+            width: 100px;
+            height: 250px;
+            margin: 50px auto;
+            border: 1px solid black;
+            border-radius: 10px;
+            position: relative;
+          }
+          
+          .red-light {
+            width: 80px;
+            height: 80px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 10px;
+          }
+          
+          .yellow-light {
+            width: 80px;
+            height: 80px;
+            background-color: grey;
+            border-radius: 50%;
+            position: absolute;
+            top: 105px;
+            left: 10px;
+          }
+          
+          .green-light {
+            width: 80px;
+            height: 80px;
+            background-color: grey;
+            border-radius: 50%;
+            position: absolute;
+            top: 190px;
+            left: 10px;
+          }
+          
+    </style>
+</head>
+<body>
+	<div class="traffic-signal">
+		<div class="red-light"></div>
+		<div class="yellow-light"></div>
+		<div class="green-light"></div>
+	</div>
+	<button onclick="changeLights()">Change Lights</button>
+	<script>
+        function changeLights() {
+            var red = document.querySelector('.red-light');
+            var yellow = document.querySelector('.yellow-light');
+            var green = document.querySelector('.green-light');
+          
+            if (red.style.backgroundColor === 'red') {
+              red.style.backgroundColor = 'grey';
+              yellow.style.backgroundColor = 'yellow';
+              green.style.backgroundColor = 'grey';
+            } else if (yellow.style.backgroundColor === 'yellow') {
+              red.style.backgroundColor = 'grey';
+              yellow.style.backgroundColor = 'grey';
+              green.style.backgroundColor = 'green';
+            } else if (green.style.backgroundColor === 'green') {
+              red.style.backgroundColor = 'red';
+              yellow.style.backgroundColor = 'grey';
+              green.style.backgroundColor = 'grey';
+            } else {
+              red.style.backgroundColor = 'red';
+              yellow.style.backgroundColor = 'grey';
+              green.style.backgroundColor = 'grey';
+            }
+          }
+          
+    </script>
+</body>
+</html>

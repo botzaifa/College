@@ -1,0 +1,58 @@
+Experiment - 05
+
+import numpy, random, os
+lr =  0.1  #learning rate (reduced for the sigmoid activation)
+bias = 1 
+weights = [random.random(), random.random(), random.random()]
+def Perceptron(input1, input2, output):
+    outputP = input1 * weights[0] + input2 * weights[1] + weights[2]
+    if outputP > 0: 
+        outputP = 1
+    else:
+        outputP = 0
+    error = output - outputP
+    
+    weights[0] += error * input1 * lr
+    weights[1] += error * input2 * lr
+    # weights[2] += error * weights[2] * lr
+    weights[2] += error * bias * lr
+for i in range(50):
+    Perceptron(1,1,1)
+    Perceptron(1,0,1)
+    Perceptron(0,1,1)
+    Perceptron(0,0,0)
+x = int(input("Enter Input of x:"))
+y = int(input("Enter Input of y:"))
+​
+outputP = x*weights[0] + y*weights[1] + weights[2]
+​
+if outputP > 0: #activation function
+    outputP = 1
+else:
+    outputP = 0
+    
+print(f"{x} or {y} is: {outputP}")
+
+
+def Perceptron1(input1, input2, output):
+    outputP = input1 * weights[0] + input2 * weights[1] + weights[2]
+    
+    outputP = 1/(1+numpy.exp(-outputP)) #sigmoid function
+    
+    error = output - outputP
+    
+    weights[0] += error * input1 * lr
+    weights[1] += error * input2 * lr
+    #weights[2] += error * weights[2] * lr
+    weights[2] += error * bias * lr
+x = int(input("Enter Input of x:"))
+y = int(input("Enter Input of y:"))
+​
+outputP = x*weights[0] + y*weights[1] + weights[2]
+​
+outputP = 1/(1+numpy.exp(-outputP))
+    
+print(f"{x} or {y} is: {outputP}")
+Enter Input of x:1
+Enter Input of y:0
+1 or 0 is: 0.6537925829669148

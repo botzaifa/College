@@ -1,0 +1,77 @@
+Experiment - 02 (1st was Case Study)
+AIM: To implement Mc-Culloh Pits model for a problem apply to solve AND/OR/XOR etc
+It takes binary inputs (0 or 1) and produces a binary output based on predefined thresholds and weights
+
+For implementing AND Function (returns 1 only if both inputs are 1)
+def mcculloch_pitts_and(x1, x2):
+    # defining the threshold and weights for the function
+    threshold = 2
+    weight1, weight2 = 1, 1
+    
+    # Calculating the weighted sum of inputs
+    weighted_sum = weight1 * x1 + weight2 * x2
+    
+    # Applying the threshold
+    output = 1 if weighted_sum >= threshold else 0
+    
+    return output
+
+# Test cases for AND Function
+print(mcculloch_pitts_and(0,0))
+print(mcculloch_pitts_and(0,1))
+print(mcculloch_pitts_and(1,0))
+print(mcculloch_pitts_and(1,1))
+0
+0
+0
+1
+
+
+For implementing OR Function (returns 1 if any of the inputs is/are 1)
+def mcculloch_pitts_or(x1, x2):
+    # defining the threshold and weights for the function
+    threshold = 1
+    weight1, weight2 = 1, 1
+    
+    # Calculating the weighted sum of inputs
+    weighted_sum = weight1 * x1 + weight2 * x2
+    
+    # Applying the threshold
+    output = 1 if weighted_sum >= threshold else 0
+    
+    return output
+
+# Test cases for OR Function
+print(mcculloch_pitts_or(0,0))
+print(mcculloch_pitts_or(0,1))
+print(mcculloch_pitts_or(1,0))
+print(mcculloch_pitts_or(1,1))
+0
+1
+1
+1
+
+
+For implementing XOR Function (returns 1 if the inputs differ)
+def mcculloch_pitts_xor(x1, x2):
+    # Defining the threshold and weights for the function
+    threshold = 1
+    weight1, weight2 = 1, 1
+    
+    # Calculating the weight 
+    weighted_sum = weight1 * x1 + weight2 * x2
+    
+    # Applying the threshold
+    output = 1 if weighted_sum <= threshold and weighted_sum >= threshold else 0
+    
+    return output
+
+# Test cases for XOR Function
+print(mcculloch_pitts_xor(0,0))
+print(mcculloch_pitts_xor(0,1))
+print(mcculloch_pitts_xor(1,0))
+print(mcculloch_pitts_xor(1,1))
+0
+1
+1
+0

@@ -1,0 +1,92 @@
+Experiment - 06
+
+
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+# Generate synthetic data (for demonstration purposes)
+num_samples = 1000
+input_dim = 10
+​
+data = np.random.rand(num_samples, input_dim)
+# Create an autoencoder model
+encoder = keras.Sequential([
+    layers.Input(shape=(input_dim,)),
+    layers.Dense(5, activation='relu'),  # Encoder hidden layer with 5 neurons
+])
+​
+decoder = keras.Sequential([
+    layers.Input(shape=(5,)),  # Decoder input matches the number of neurons in the encoder's hidden layer
+    layers.Dense(input_dim, activation='sigmoid'),  # Decoder output with sigmoid activation
+])
+​
+autoencoder = keras.Sequential([encoder, decoder])
+# Compile the autoencoder
+autoencoder.compile(optimizer='adam', loss='mean_squared_error')
+# Train the autoencoder
+autoencoder.fit(data, data, epochs=50, batch_size=32)
+
+# Use the trained encoder to encode data
+encoded_data = encoder.predict(data)
+32/32 [==============================] - 0s 1ms/step
+# Check the reconstructed data
+decoded_data = decoder.predict(encoded_data)
+32/32 [==============================] - 0s 1ms/step
+# Print the original and reconstructed data
+print("Original Data:")
+print(data[0])
+print("Reconstructed Data:")
+print(decoded_data[0])
+Original Data:
+[0.61316265 0.6007631  0.11179022 0.79887351 0.44498316 0.84531324
+ 0.67841774 0.74127428 0.96186875 0.75226275]
+Reconstructed Data:
+
+
+
+
+Method - 2
+import tensorflow as tf
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+# Load and prepare data
+iris = load_iris()
+data = iris.data
+​
+scaler = StandardScaler() #standardize the data
+scaled_data = scaler.fit_transform(data)
+x_train, x_test = train_test_split(scaled_data, test_size=0.2, random_state=42)
+​
+input_dim = x_train.shape[1] #building the auto encoder
+​
+encoding_dim = input_dim  # Match encoding dimension to input feature count
+encoder = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(input_dim,)),
+    tf.keras.layers.Dense(8, activation = 'relu'),
+    tf.keras.layers.Dense(encoding_dim, activation = 'relu')
+])
+decoder = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(input_dim,)),
+    tf.keras.layers.Dense(8, activation = 'relu'),
+    tf.keras.layers.Dense(encoding_dim, activation = 'sigmoid')
+])
+autoencoder = tf.keras.Sequential([encoder, decoder])
+# compiling the model
+autoencoder.compile(optimizer='adam', loss='mean_squared_error')
+# Training the model
+autoencoder.fit(x_train, x_train, epochs=200, batch_size=16, shuffle=True)
+
+# Evaluate the model
+reconstructed_data = autoencoder.predict(x_test)
+1/1 [==============================] - 0s 70ms/step
+# Calculate the MSE betn original and reconstructed data
+from sklearn.metrics import mean_squared_error
+​
+mse = mean_squared_error(x_test, reconstructed_data)
+print(f"Mean squared Error (MSE)is: {mse:.4f}")
+Mean squared Error (MSE)is: 0.5421
+print(reconstructed_data)
+[[2.32412353e-01 2.19717142e-04 2.27083266e-01 1.07716911e-01]
+ [7.56905283e-05 9.97419000e-01 3.42997396e-06 3.40520683e-06]

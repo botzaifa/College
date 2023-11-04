@@ -1,0 +1,71 @@
+Experiment - 08
+
+import random
+# Parameters
+target_string = "1101011100"
+population_size = 100
+mutation_rate = 0.01
+# Generate the initial population
+def generate_population(pop_size, target_length):
+    return [''.join(random.choice('01') for _ in range(target_length)) for _ in range(pop_size)]
+# Fitness function: Calculate the fitness of each individual
+def calculate_fitness(individual):
+    return sum(1 for a, b in zip(individual, target_string) if a == b)
+# Selection: Roulette wheel selection
+def select_population(population, fitness_scores):
+    selected = []
+    total_fitness = sum(fitness_scores)
+    
+    for _ in range(len(population)):
+        pick = random.uniform(0, total_fitness)
+        current = 0
+        for i, fitness in enumerate(fitness_scores):
+            current += fitness
+            if current > pick:
+                selected.append(population[i])
+                break
+    
+    return selected
+# Crossover: Single-point crossover
+def crossover(parent1, parent2):
+    crossover_point = random.randint(1, len(parent1) - 1)
+    child1 = parent1[:crossover_point] + parent2[crossover_point:]
+    child2 = parent2[:crossover_point] + parent1[crossover_point:]
+    return child1, child2
+# Mutation: Flip bits with a certain probability
+def mutate(individual, mutation_rate):
+    mutated_individual = list(individual)
+    for i in range(len(mutated_individual)):
+        if random.random() < mutation_rate:
+            mutated_individual[i] = '0' if mutated_individual[i] == '1' else '1'
+    return ''.join(mutated_individual)
+# Main Genetic Algorithm loop
+population = generate_population(population_size, len(target_string))
+generation = 0
+​
+while True:
+    fitness_scores = [calculate_fitness(ind) for ind in population]
+    best_individual = population[fitness_scores.index(max(fitness_scores))]
+    
+    print(f"Generation {generation}: {best_individual} (Fitness: {max(fitness_scores)})")
+    
+    if best_individual == target_string:
+        print("Solution found!")
+        break
+    
+    selected_population = select_population(population, fitness_scores)
+    new_population = []
+    
+    while len(new_population) < population_size:
+        parent1, parent2 = random.choices(selected_population, k=2)
+        child1, child2 = crossover(parent1, parent2)
+        child1 = mutate(child1, mutation_rate)
+        child2 = mutate(child2, mutation_rate)
+        new_population.extend([child1, child2])
+    
+    population = new_population
+    generation += 1
+Generation 0: 1101010100 (Fitness: 9)
+Generation 1: 0101011100 (Fitness: 9)
+Generation 2: 1101011100 (Fitness: 10)
+Solution found!

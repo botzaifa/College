@@ -1,0 +1,26 @@
+Experiment - 04
+To implement a Fuzzy Extension Principle
+Fuzzy logic that allows us to extend the membership degree of an element from a crisp set (a set with clear and precise boundaries) to a fuzzy set (a set with uncertain or vague boundaries)
+
+import numpy as np
+def fuzzy_extension(original_set, new_domain):
+    extended_set = np.interp(new_domain, original_set.domain, original_set.membership)
+    return extended_set
+​
+class FuzzySet:
+    def __init__(self, domain, membership):
+        self.domain = domain
+        self.membership = membership
+# Definine the original fuzzy set on the domain [0,10]
+original_domain = np.linspace(0,10,11)
+original_membership = np.array([0, 0.2, 0.4, 0.6, 0.8, 1.0 , 0.8, 0.6, 0.4, 0.2, 0])
+original_set = FuzzySet(original_domain, original_membership)
+# Defining the new domain 
+new_domain = np.linspace(0, 20,21)
+# Extending the Fuzzy set to the new domain
+extended_membership = fuzzy_extension(original_set, new_domain)
+print("Original Membership:", original_membership)
+print("Extended Membership:", extended_membership)
+Original Membership: [0.  0.2 0.4 0.6 0.8 1.  0.8 0.6 0.4 0.2 0. ]
+Extended Membership: [0.  0.2 0.4 0.6 0.8 1.  0.8 0.6 0.4 0.2 0.  0.  0.  0.  0.  0.  0.  0.
+ 0.  0.  0. ]

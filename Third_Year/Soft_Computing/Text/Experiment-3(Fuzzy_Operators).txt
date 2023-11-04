@@ -1,0 +1,91 @@
+Experiment - 03
+To implement Fuzzy Operations and Relations
+Fuzzy refers to something which is unclear or vague. Where every Key is associated with value which is between 0 to 1 based on the certainty.
+
+Union in Fuzzy sets
+def fuzzy_union(fuzzy_set1, fuzzy_set2):
+    # creating a dictionary which stores the results
+    union_result = {}
+    
+    # Merge the keys from both sets
+    all_keys = set(fuzzy_set1.keys()) | set(fuzzy_set2.keys())
+    
+    for key in all_keys:
+        # Get the maximum membership degree for each element
+        max_membership = max(fuzzy_set1.get(key, 0), fuzzy_set2.get(key, 0))
+        union_result[key] = max_membership
+    
+    return union_result
+​
+# Example fuzzy sets
+fuzzy_set1 = {'A': 0.2, 'B': 0.6, 'C': 0.8}
+fuzzy_set2 = {'B': 0.4, 'C': 0.7, 'D': 0.5}
+​
+# Compute the union of fuzzy sets
+union_result = fuzzy_union(fuzzy_set1, fuzzy_set2)
+​
+# Display the result
+print("Fuzzy Set 1:", fuzzy_set1)
+print("Fuzzy Set 2:", fuzzy_set2)
+print("Union Result:", union_result)
+Fuzzy Set 1: {'A': 0.2, 'B': 0.6, 'C': 0.8}
+Fuzzy Set 2: {'B': 0.4, 'C': 0.7, 'D': 0.5}
+Union Result: {'A': 0.2, 'B': 0.6, 'D': 0.5, 'C': 0.8}
+
+
+
+Intersection in Fuzzy Sets
+def fuzzy_intersection(fuzzy_set1, fuzzy_set2):
+    # creating a dictionary which stores the results
+    intersection_result = {}
+    
+    # Find the common keys in both sets
+    common_keys = set(fuzzy_set1.keys()) & set(fuzzy_set2.keys())
+    
+    for key in common_keys:
+        # Get the minimum membership degree for each element
+        min_membership = min(fuzzy_set1[key], fuzzy_set2[key])
+        intersection_result[key] = min_membership
+    
+    return intersection_result
+​
+# Example fuzzy sets
+fuzzy_set1 = {'A': 0.2, 'B': 0.6, 'C': 0.8}
+fuzzy_set2 = {'B': 0.4, 'C': 0.7, 'D': 0.5}
+​
+# Compute the intersection of fuzzy sets
+intersection_result = fuzzy_intersection(fuzzy_set1, fuzzy_set2)
+​
+# Display the result
+print("Fuzzy Set 1:", fuzzy_set1)
+print("Fuzzy Set 2:", fuzzy_set2)
+print("Intersection Result:", intersection_result)
+Fuzzy Set 1: {'A': 0.2, 'B': 0.6, 'C': 0.8}
+Fuzzy Set 2: {'B': 0.4, 'C': 0.7, 'D': 0.5}
+Intersection Result: {'B': 0.4, 'C': 0.7}
+
+
+
+Complement in Fuzzy Sets
+def fuzzy_complement(fuzzy_set):
+    # creating a dictionary which stores the results
+    complement_result = {}
+    
+    for key, membership in fuzzy_set.items():
+        # Calculate the complement by subtracting each membership degree from 1
+        complement_degree = 1 - membership
+        complement_result[key] = complement_degree
+    
+    return complement_result
+​
+# Example fuzzy set
+fuzzy_set = {'A': 0.2, 'B': 0.6, 'C': 0.8}
+​
+# Compute the complement of the fuzzy set
+complement_result = fuzzy_complement(fuzzy_set)
+​
+# Display the result
+print("Fuzzy Set:", fuzzy_set)
+print("Complement Result:", complement_result)
+Fuzzy Set: {'A': 0.2, 'B': 0.6, 'C': 0.8}
+Complement Result: {'A': 0.8, 'B': 0.4, 'C': 0.19999999999999996}
